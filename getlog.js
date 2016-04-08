@@ -1,4 +1,8 @@
-var key = getApiKey();
+var key;
+
+getAuthKey(function(authkey) {
+    key = authkey;
+});
 
 function getlogs() {
     $(function() {
@@ -19,7 +23,7 @@ function getlogs() {
             });
     });
 }
-setInterval(getlogs, 500);
+setInterval(getlogs, 1000);
 
 $(document).ready(function() {
     var $form = $('form');
@@ -27,8 +31,8 @@ $(document).ready(function() {
         var command = $("#command").val();
         console.log(command);
         $.post($(this).attr('action'), {
-            Body: command,
-            apikey: key
+            command: command,
+            key: key
         }, function(response) {}, 'json');
         $('#command').val('');
         return false;
